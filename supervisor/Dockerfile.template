@@ -1,0 +1,11 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:stretch-run
+
+# Defines our working directory in container
+WORKDIR /usr/src/app
+
+RUN install_packages supervisor
+
+COPY supervisord.conf /etc/supervisor/
+COPY program_*.conf /etc/supervisor/conf.d/
+
+CMD ["supervisord", "-n", "-c", "/etc/supervisor/supervisord.conf"]
